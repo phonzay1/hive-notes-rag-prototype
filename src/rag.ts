@@ -53,7 +53,8 @@ async function getResponse(question: string, context: string) {
 
     return completion.content[0].type === 'text' ? 
       completion.content[0].text : 'No answer found';
-  } catch {
+  } catch (err) {
+    console.error(`An error occurred: ${err}, calling fallback model`);
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',
       messages: [
